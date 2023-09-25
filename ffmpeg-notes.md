@@ -5,10 +5,10 @@
   - [Strip all metadata from mp4 (requires remux)](#strip-all-metadata-from-mp4-requires-remux)
   - [Embed SRT subtitle into mp4 as soft subtitle stream](#embed-srt-subtitle-into-mp4-as-soft-subtitle-stream)
   - [Embed multiple subtitles into mp4](#embed-multiple-subtitles-into-mp4)
-  - [Reencode Blu-Ray to x265](#reencode-blu-ray-to-x265)
+  - [Re-encode Blu-Ray to x265 (1080p)](#re-encode-blu-ray-to-x265-1080p)
   - [Remux mp4 with no embedded subtitles to mkv, don't copy any metadata](#remux-mp4-with-no-embedded-subtitles-to-mkv-dont-copy-any-metadata)
-  - [Remux mp4 with embedded sub to mkv, don't copy any metadata](#remux-mp4-with-embedded-sub-to-mkv-dont-copy-any-metadata)
-  - [Remux mp4 and 1 external sub to mkv, don't copy any metadata](#remux-mp4-and-1-external-sub-to-mkv-dont-copy-any-metadata)
+  - [Remux mp4 with embedded subtitle stream to mkv, don't copy any metadata](#remux-mp4-with-embedded-subtitle-stream-to-mkv-dont-copy-any-metadata)
+  - [Remux mp4 and 1 external subtitle to mkv, don't copy any metadata](#remux-mp4-and-1-external-subtitle-to-mkv-dont-copy-any-metadata)
   - [Remux mp4 and multiple external subtitles to mkv, don't copy any metadata](#remux-mp4-and-multiple-external-subtitles-to-mkv-dont-copy-any-metadata)
   - [Misc Notes](#misc-notes)
 - [MKVToolnix stuff](#mkvtoolnix-stuff)
@@ -26,14 +26,16 @@ First, to find the mean audio volume:
 ffmpeg -i input.mkv -vn -af "volumedetect" -f null /dev/null
 ```
 
-In the output will be something like `mean_volume: -24.8 dB`
+In the output will be something like
+
+`mean_volume: -24.8 dB`
 
 Next, use that value to normalize:
 ```
 ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
 ```
 
-## Extract embedded Blu-Ray subtitles (PGS/HDMV) to .sup file
+## Extract embedded Blu-Ray subtitles (PGS/HDMV) from mkv
 ```
 ffmpeg -i input.mkv -map 0:s:0 -c copy -f sup output.sup
 ```
@@ -52,7 +54,7 @@ ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflag
 ## Embed SRT subtitle into mp4 as soft subtitle stream
 (See https://www.baeldung.com/linux/subtitles-ffmpeg)
 
-Note: `mov_text` is the only valid embedded sub format in mp4 container
+Note: `mov_text` is the only valid embedded subtitle format in mp4 container
 ```
 ffmpeg -i input.mp4 -i sub.srt -c copy -c:s mov_text -metadata:s:s:0 language=eng output.mp4
 ```
@@ -62,10 +64,10 @@ ffmpeg -i input.mp4 -i sub.srt -c copy -c:s mov_text -metadata:s:s:0 language=en
 ffmpeg -i input.mp4 -i sub1.srt -i sub2.srt -map 0:v -map 0:a -map 1 -map 2 -c:v copy -c:a copy -c:s mov_text -metadata:s:s:0 language=eng -metadata:s:s:1 language=eng -metadata:s:s:1 title='SDH' output.mp4
 ```
 
-## Reencode Blu-Ray to x265
+## Re-encode Blu-Ray to x265 (1080p)
 (See [Reddit post](https://www.reddit.com/r/ffmpeg/comments/mij9mr/which_settings_for_converting_fullhd_blu_rays_to/?rdt=47933))
 ```
-ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -preset slow -crf 20 -aq-mode 4 -pix_fmt yuv420p10le -c:v libx265 -tag:v hvc1 -x265-params hdr-opt=1:keyint=96 -profile:v main10 -c:a copy -c:s copy output.mkv
+ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -preset slow -crf 22 -aq-mode 4 -pix_fmt yuv420p10le -c:v libx265 -tag:v hvc1 -x265-params hdr-opt=1:keyint=96 -profile:v main10 -c:a copy -c:s copy output.mkv
 ```
 
 ## Remux mp4 with no embedded subtitles to mkv, don't copy any metadata
@@ -73,13 +75,13 @@ ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -pr
 ffmpeg -i input.mp4 -map_metadata -1 -map 0 -c copy output.mkv
 ```
 
-## Remux mp4 with embedded sub to mkv, don't copy any metadata
+## Remux mp4 with embedded subtitle stream to mkv, don't copy any metadata
 ```
 ffmpeg -i input.mp4 -map_metadata -1 -map 0:v -map 0:a -map 0:s -c:v copy -c:a copy -c:s srt output.mkv
 ```
-to add a title to the sub stream, add `-metadata:s:s:0 title='Subs title'`
+to add a title to the subtitle stream, add `-metadata:s:s:0 title='Subs title'`
 
-## Remux mp4 and 1 external sub to mkv, don't copy any metadata
+## Remux mp4 and 1 external subtitle to mkv, don't copy any metadata
 ```
 ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1:s -metadata:s:s:0 language=eng output.mkv
 ```
