@@ -1,4 +1,4 @@
-- [FFMpeg Stuff](#ffmpeg-stuff)
+- [FFmpeg Stuff](#ffmpeg-stuff)
   - [Normalize audio volume](#normalize-audio-volume)
   - [Extract embedded Blu-Ray subtitles (PGS/HDMV) to .sup file](#extract-embedded-blu-ray-subtitles-pgshdmv-to-sup-file)
   - [Convert subtitle from SRT to SSA](#convert-subtitle-from-srt-to-ssa)
@@ -18,7 +18,7 @@
   - [Delete name from 1st video track in mkv](#delete-name-from-1st-video-track-in-mkv)
   - [Delete all metadata tags from mkv](#delete-all-metadata-tags-from-mkv)
 
-# FFMpeg Stuff
+# FFmpeg Stuff
 
 ## Normalize audio volume
 First, to find the mean audio volume:
