@@ -1,8 +1,8 @@
 - [1. Working with Subtitles](#1-working-with-subtitles)
   - [1.1. Remuxing with Soft Subtitles](#11-remuxing-with-soft-subtitles)
     - [1.1.1. Remux MP4 with No Soft Subtitles to MKV](#111-remux-mp4-with-no-soft-subtitles-to-mkv)
-    - [1.1.2. Remux MP4 with 1 Soft Subtitle Stream to MKV](#112-remux-mp4-with-1-soft-subtitle-stream-to-mkv)
-    - [1.1.3. MISSING: Remux MP4 with Multiple Soft Subtitle Streams to MKV](#113-missing-remux-mp4-with-multiple-soft-subtitle-streams-to-mkv)
+    - [1.1.2. Remux MP4 with 1 Soft Subtitle Track to MKV](#112-remux-mp4-with-1-soft-subtitle-track-to-mkv)
+    - [1.1.3. MISSING: Remux MP4 with Multiple Soft Subtitle Tracks to MKV](#113-missing-remux-mp4-with-multiple-soft-subtitle-tracks-to-mkv)
   - [1.2. Remuxing with Sidecar Subtitles](#12-remuxing-with-sidecar-subtitles)
     - [1.2.1. Remux MP4 and 1 Sidecar SRT into MKV](#121-remux-mp4-and-1-sidecar-srt-into-mkv)
     - [1.2.2. Remux MP4 and 1 Sidecar SRT into MP4](#122-remux-mp4-and-1-sidecar-srt-into-mp4)
@@ -33,23 +33,23 @@
 # 1. Working with Subtitles
 
 ## 1.1. Remuxing with Soft Subtitles
-Soft subtitles refers to subtitle streams that are embedded into a video container file, as opposed to [sidecar](#remuxing-with-sidecar-subtitles) or hardcoded subtitles.
+Soft subtitles refers to subtitle that are packaged as a track or stream inside a video container file, as opposed to [sidecar](#remuxing-with-sidecar-subtitles) or hardcoded subtitles.
 
 ### 1.1.1. Remux MP4 with No Soft Subtitles to MKV
 ```
 ffmpeg -i input.mp4 -c copy -map 0 -map_metadata -1 output.mkv
 ```
 
-### 1.1.2. Remux MP4 with 1 Soft Subtitle Stream to MKV
+### 1.1.2. Remux MP4 with 1 Soft Subtitle Track to MKV
 ```
 ffmpeg -i input.mp4 -c:v copy -c:a copy -c:s srt -map_metadata -1 -map 0 -metadata:s:s:0 language=eng output.mkv
 ```
-To give a title to the subtitle stream, add e.g. `-metadata:s:s:0 title='English Commentary'`
+To give a title to the subtitle track, add e.g. `-metadata:s:s:0 title='English Commentary'`
 
-### 1.1.3. MISSING: Remux MP4 with Multiple Soft Subtitle Streams to MKV
+### 1.1.3. MISSING: Remux MP4 with Multiple Soft Subtitle Tracks to MKV
 
 ## 1.2. Remuxing with Sidecar Subtitles
-Sidecar subtitles are separate subtitle files that usually sit alongside the main video file.
+Sidecar subtitles are separate subtitle files that usually sit alongside the main video file with the same base filename. (i.e. `video.mkv` and `video.eng.srt`)
 
 ### 1.2.1. Remux MP4 and 1 Sidecar SRT into MKV
 ```
@@ -104,7 +104,7 @@ ffmpeg -i input.srt output.ass
 ## 1.4. Other Subtitle Operations
 
 ### 1.4.1. Setting Subtitles to Automatically Display
-*Video players will automatically display the first subtitle stream that has the "default" flag set.*
+*Video players will automatically display the first subtitle track that has the "default" flag set.*
 ```
 mkvpropedit -q input.mkv -e track:s1 -s flag-default=1
 ```
