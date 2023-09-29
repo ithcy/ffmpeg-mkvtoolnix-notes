@@ -69,6 +69,14 @@ ffmpeg -i input.mp4 -map 0:s:0 output.srt
 ffmpeg -i input.srt output.ass
 ```
 
+## Other Subtitle Operations
+
+### Setting Subtitles to Automatically Display
+Video players will automatically display the first subtitle stream in a video that has the "default" flag set to true.
+```
+mkvpropedit -q input.mkv -e track:s1 -s flag-default=1
+```
+
 # Working with Metadata
 
 ## Working with Matroska Metadata
@@ -133,32 +141,3 @@ If 'Starting new cluster due to timestamp' warning appears in ffmpeg output, add
 If missing timestamp errors appear in ffmpeg output, try `-fflags +genpts`
 
 To time ffmpeg operation, add `-benchmark`
-- [Working with Subtitles](#working-with-subtitles)
-  - [Remuxing with Soft Subtitles](#remuxing-with-soft-subtitles)
-    - [Remux MP4 with No Soft Subtitles to MKV](#remux-mp4-with-no-soft-subtitles-to-mkv)
-    - [Remux MP4 with 1 Soft Subtitle Stream to MKV](#remux-mp4-with-1-soft-subtitle-stream-to-mkv)
-    - [MISSING: Remux MP4 with Multiple Soft Subtitle Streams to MKV](#missing-remux-mp4-with-multiple-soft-subtitle-streams-to-mkv)
-  - [Remuxing with Sidecar Subtitles](#remuxing-with-sidecar-subtitles)
-    - [Remux MP4 and 1 Sidecar SRT into MKV](#remux-mp4-and-1-sidecar-srt-into-mkv)
-    - [Remux MP4 and 1 Sidecar SRT into MP4](#remux-mp4-and-1-sidecar-srt-into-mp4)
-    - [Remux MKV and Sidecar VobSub (.idx/.sub) into MKV](#remux-mkv-and-sidecar-vobsub-idxsub-into-mkv)
-    - [Remux MP4 and Multiple Sidecar SRTs into MKV](#remux-mp4-and-multiple-sidecar-srts-into-mkv)
-    - [Remux MP4 and Multiple Sidecar SRTs into MP4](#remux-mp4-and-multiple-sidecar-srts-into-mp4)
-  - [Extracting and Converting Subtitles](#extracting-and-converting-subtitles)
-    - [Extract Blu-Ray (PGS/HDMV) Subtitles from MKV](#extract-blu-ray-pgshdmv-subtitles-from-mkv)
-    - [Alternate method of extracting Blu-Ray subtitles using mkvmerge](#alternate-method-of-extracting-blu-ray-subtitles-using-mkvmerge)
-    - [Extract Soft Subtitle from MP4 and Convert to SRT](#extract-soft-subtitle-from-mp4-and-convert-to-srt)
-    - [Convert Subtitle file from SRT to SSA](#convert-subtitle-file-from-srt-to-ssa)
-- [Working with Metadata](#working-with-metadata)
-  - [Working with Matroska Metadata](#working-with-matroska-metadata)
-    - [Strip All Metadata Tags from an MKV file](#strip-all-metadata-tags-from-an-mkv-file)
-    - [Delete Main Title from an MKV file](#delete-main-title-from-an-mkv-file)
-    - [Delete Name from First Video Track in an MKV file](#delete-name-from-first-video-track-in-an-mkv-file)
-  - [Working with MP4 Metadata](#working-with-mp4-metadata)
-    - [Strip All Metadata Tags from an MP4 file](#strip-all-metadata-tags-from-an-mp4-file)
-- [Other](#other)
-  - [Encoding](#encoding)
-    - [Re-encode Blu-Ray file to x265 (1080p)](#re-encode-blu-ray-file-to-x265-1080p)
-  - [Audio Processing](#audio-processing)
-    - [Normalize Audio Volume](#normalize-audio-volume)
-- [Notes](#notes)
