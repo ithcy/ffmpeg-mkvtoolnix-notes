@@ -35,6 +35,9 @@ Next, use that value to normalize:
 ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
 ```
 
+## Extract embedded subtitle and convert to SRT
+ffmpeg -i input.mp4 -map 0:s:0 output.srt
+
 ## Extract embedded Blu-Ray subtitles (PGS/HDMV) from mkv
 ```
 ffmpeg -i input.mkv -map 0:s:0 -c copy -f sup output.sup
