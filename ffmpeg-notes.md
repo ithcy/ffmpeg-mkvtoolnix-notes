@@ -33,7 +33,7 @@
 # 1. Working with Subtitles
 
 ## 1.1. Remuxing with Soft Subtitles
-Soft subtitles refers to subtitle streams that are embedded into a video container file, as opposed to [sidecar]#remuxing-with-sidecar-subtitles() or hardcoded subtitles.
+Soft subtitles refers to subtitle streams that are embedded into a video container file, as opposed to [sidecar](#remuxing-with-sidecar-subtitles) or hardcoded subtitles.
 
 ### 1.1.1. Remux MP4 with No Soft Subtitles to MKV
 ```
