@@ -25,7 +25,7 @@ ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1
 ```
 
 ### Remux MP4 and 1 Sidecar SRT into MP4
-Note: `mov_text` is the only valid embedded subtitle format in mp4 container
+*The subtitle is converted to mov_text format (aka Timed Text/TTXT, [MPEG-4 Part 17](http://en.wikipedia.org/wiki/MPEG-4_Part_17)) since MP4 does not support SRT subtitles*
 ```
 ffmpeg -i input.mp4 -i sub.srt -c:v copy -c:a copy -c:s mov_text -map_metadata -1 -metadata:s:s:0 language=eng output.mp4
 ```
@@ -53,7 +53,7 @@ ffmpeg -i input.mkv -map 0:s:0 -f sup output.sup
 ```
 
 ### Alternate method of extracting Blu-Ray subtitles using mkvmerge
-First identify track ID with mkvmerge, then use that track ID with mkvextract
+*First, find the ID of the subtitle track ID with mkvmerge, then use that track ID with mkvextract.*
 ```
 mkvmerge -i input.mkv
 mkvextract input.mkv tracks 1:output.sup
@@ -72,7 +72,7 @@ ffmpeg -i input.srt output.ass
 ## Other Subtitle Operations
 
 ### Setting Subtitles to Automatically Display
-Video players will automatically display the first subtitle stream in a video that has the "default" flag set to true.
+*Video players will automatically display the first subtitle stream that has the "default" flag set.*
 ```
 mkvpropedit -q input.mkv -e track:s1 -s flag-default=1
 ```
@@ -80,7 +80,7 @@ mkvpropedit -q input.mkv -e track:s1 -s flag-default=1
 # Working with Metadata
 
 ## Working with Matroska Metadata
-No remuxing is needed for these operations; they happen in place on the original file.
+*No remuxing is needed for these operations; they happen in place on the original file.*
 
 ### Strip All Metadata Tags from an MKV file
 ```
@@ -88,7 +88,7 @@ mkvpropedit input.mkv --tags all:
 ```
 
 ### Delete Main Title from an MKV file
-This deletes the title tag from the segment info / format section
+*This deletes the title tag from the segment info / format section.*
 ```
 mkvpropedit input.mkv -d title
 ```
@@ -99,7 +99,7 @@ mkvpropedit input.mkv -e track:v1 -d name
 ```
 
 ## Working with MP4 Metadata
-These operations require remuxing.
+*These operations require remuxing.*
 
 ### Strip All Metadata Tags from an MP4 file
 (See [Superuser post](https://superuser.com/questions/441361/strip-metadata-from-all-formats-with-ffmpeg/428039#428039))
