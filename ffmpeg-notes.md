@@ -44,7 +44,7 @@ ffmpeg -i input.mp4 -c copy -map 0 -map_metadata -1 output.mkv
 ```
 ffmpeg -i input.mp4 -c:v copy -c:a copy -c:s srt -map_metadata -1 -map 0 -metadata:s:s:0 language=eng output.mkv
 ```
-To add a title to the subtitle stream, add e.g. `-metadata:s:s:0 title='English Commentary'`
+To give a title to the subtitle stream, add e.g. `-metadata:s:s:0 title='English Commentary'`
 
 ### 1.1.3. MISSING: Remux MP4 with Multiple Soft Subtitle Streams to MKV
 
