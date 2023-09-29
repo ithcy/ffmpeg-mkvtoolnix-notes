@@ -1,88 +1,93 @@
 # Working with Subtitles
 
-## Extract embedded subtitle and convert to SRT
+## Remux mp4 with no soft subtitles to mkv, don't copy any metadata
 ```
-ffmpeg -i input.mp4 -map 0:s:0 output.srt
-```
-
-## Extract embedded Blu-Ray subtitles (PGS/HDMV) from mkv
-```
-ffmpeg -i input.mkv -map 0:s:0 -f sup output.sup
+ffmpeg -i input.mp4 -c copy -map 0 -map_metadata -1 output.mkv
 ```
 
-## Convert subtitle from SRT to SSA
+## Remux mp4 with 1 soft subtitle stream to mkv, don't copy any metadata
 ```
-ffmpeg -i input-sub.srt output-sub.ass
-```
-
-## Embed SRT subtitle into mp4 as soft subtitle stream
-(See https://www.baeldung.com/linux/subtitles-ffmpeg)
-
-Note: `mov_text` is the only valid embedded subtitle format in mp4 container
-```
-ffmpeg -i input.mp4 -i sub.srt -c copy -c:s mov_text -metadata:s:s:0 language=eng output.mp4
-```
-
-## Embed multiple subtitles into mp4
-```
-ffmpeg -i input.mp4 -i sub1.srt -i sub2.srt -map 0:v -map 0:a -map 1 -map 2 -c:v copy -c:a copy -c:s mov_text -metadata:s:s:0 language=eng -metadata:s:s:1 language=eng -metadata:s:s:1 title='SDH' output.mp4
-```
-
-## Remux mp4 with no embedded subtitles to mkv, don't copy any metadata
-```
-ffmpeg -i input.mp4 -map_metadata -1 -map 0 -c copy output.mkv
-```
-
-## Remux mp4 with embedded subtitle stream to mkv, don't copy any metadata
-```
-ffmpeg -i input.mp4 -map_metadata -1 -map 0:v -map 0:a -map 0:s -c:v copy -c:a copy -c:s srt output.mkv
+ffmpeg -i input.mp4 -c:v copy -c:a copy -c:s srt -map_metadata -1 -map 0 -metadata:s:s:0 language=eng output.mkv
 ```
 to add a title to the subtitle stream, add `-metadata:s:s:0 title='Subs title'`
 
-## Remux mp4 and 1 external subtitle to mkv, don't copy any metadata
+## Remux mp4 and 1 external SRT, don't copy any metadata
+
+### To mkv:
 ```
 ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1:s -metadata:s:s:0 language=eng output.mkv
 ```
 
-## Remux mp4 and multiple external subtitles to mkv, don't copy any metadata
+### To mp4:
+Note: `mov_text` is the only valid embedded subtitle format in mp4 container
+```
+ffmpeg -i input.mp4 -i sub.srt -c:v copy -c:a copy -c:s mov_text -map_metadata -1 -metadata:s:s:0 language=eng output.mp4
+```
+
+## Remux mp4 and multiple external SRT, don't copy any metadata
+
+### To mkv:
 ```
 ffmpeg -i input.mp4 -i sub1.srt -i sub2.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1:s -map 2:s -metadata:s:s:0 language=eng -metadata:s:s:1 language=eng -metadata:s:s:1 title='SDH' output.mkv
 ```
 
-## Extract HDMV/PGS/SUP subtitles for OCR etc.
+### To mp4:
+```
+ffmpeg -i input.mp4 -i sub1.srt -i sub2.srt -c:v copy -c:a copy -c:s mov_text -map_metadata -1 -map 0:v -map 0:a -map 1:s -map 2:s -metadata:s:s:0 language=eng -metadata:s:s:1 language=eng -metadata:s:s:1 title='SDH' output.mp4
+```
+
+## Remux mkv and VobSub (.idx/.sub) subtitles into mkv
+```
+mkvmerge -o output.mkv input.mkv sub.idx #[ ...sub2.idx ... ]
+```
+
+## Extract subtitle from mp4 and convert to SRT
+```
+ffmpeg -i input.mp4 -map 0:s:0 output.srt
+```
+
+## Extract Blu-Ray subtitles (PGS/HDMV) from mkv
+```
+ffmpeg -i input.mkv -map 0:s:0 -f sup output.sup
+```
+### (Alternate method)
 First identify track ID with mkvmerge, then use that track ID with mkvextract
 ```
 mkvmerge -i input.mkv
 mkvextract input.mkv tracks 1:output.sup
 ```
 
-## Embed VobSub (.idx/.sub) subtitles into mkv
+## Convert subtitle from SRT to SSA
 ```
-mkvmerge -o output.mkv input.mkv sub.idx #[ ...sub2.idx ... ]
+ffmpeg -i input.srt output.ass
 ```
 
 # Working with Metadata
 
-## Strip all metadata tags from mkv
+## Matroska 
+
+### Strip all metadata tags from mkv
 ```
 mkvpropedit input.mkv --tags all:
 ```
 
-## Strip all metadata tags from mp4 (requires remux)
-(See [Superuser post](https://superuser.com/questions/441361/strip-metadata-from-all-formats-with-ffmpeg/428039#428039))
-```
-ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -flags:s +bitexact output.mp4
-```
-
-## Delete main title from mkv
+### Delete main title from mkv
 This deletes the title tag from the segment info / format section
 ```
 mkvpropedit input.mkv -d title
 ```
 
-## Delete name from first video track in mkv
+### Delete name from first video track in mkv
 ```
 mkvpropedit input.mkv -e track:v1 -d name
+```
+
+## MP4
+
+### Strip all metadata tags from mp4 (requires remux)
+(See [Superuser post](https://superuser.com/questions/441361/strip-metadata-from-all-formats-with-ffmpeg/428039#428039))
+```
+ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -flags:s +bitexact output.mp4
 ```
 
 # Other
