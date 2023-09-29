@@ -101,23 +101,27 @@ ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflag
 
 # Other
 
-## Re-encode Blu-Ray to x265 (1080p)
+## Encoding
+
+### Re-encode Blu-Ray file to x265 (1080p)
 (See [Reddit post](https://www.reddit.com/r/ffmpeg/comments/mij9mr/which_settings_for_converting_fullhd_blu_rays_to/?rdt=47933))
 ```
 ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -preset slow -crf 22 -aq-mode 4 -pix_fmt yuv420p10le -c:v libx265 -tag:v hvc1 -x265-params hdr-opt=1:keyint=96 -profile:v main10 -c:a copy -c:s copy output.mkv
 ```
 
-## Normalize audio volume
-First, to find the mean audio volume:
+## Audio Processing
+
+### Normalize Audio Volume
+First, find the mean audio volume:
 ```
 ffmpeg -i input.mkv -vn -af "volumedetect" -f null /dev/null
 ```
 
-In the output will be something like
+Near the end of the output will be something like:
 
 `mean_volume: -24.8 dB`
 
-Next, use that value to normalize:
+Next, use that value to normalize
 ```
 ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
 ```
