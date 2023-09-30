@@ -1,7 +1,7 @@
 # FFmpeg / MKVToolNix Notes
 
 :doctype: article
-:toc:
+:toc: auto
 :toclevels: 4
 
 == Working with Subtitles
