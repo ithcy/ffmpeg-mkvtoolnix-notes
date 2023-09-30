@@ -21,12 +21,15 @@
 
 [source,shell,subs="verbatim,quotes"]
 ----
-*my_funny_video.mkv*      ☚ Video file
-*my_funny_video.srt*  ☚ Sub file
+*my_funny_video.mp4*    ☚ Video file
+*my_funny_video.srt*    ☚ Sub file
 ...
-*my_video_2.mkv*      ☚ Video file
-*my_video_2.idx*      ☚ Sub file
-*my_video_2.sub*      ☚ Sub file
+*my_video.avi*          ☚ Video file
+*my_video.eng.srt*      ☚ Sub file
+...
+*my_video_2.mp4*        ☚ Video file
+*my_video_2.idx*        ☚ Sub file
+*my_video_2.sub*        ☚ Sub file
 
 ----
 
