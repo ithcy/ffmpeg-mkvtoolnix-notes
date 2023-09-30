@@ -9,6 +9,7 @@
 :rouge-theme: monokai
 :source-language: shell
 :stylesheet: boot-slate.css
+:hide-uri-scheme:
 
 == Working with Subtitles
 
