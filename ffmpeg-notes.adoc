@@ -1,6 +1,6 @@
 # FFmpeg / MKVToolNix Notes
 :doctype: article
-:toc: right
+:toc: auto
 :toclevels: 4
 :hide-uri-scheme:
 :icons: font
