@@ -19,10 +19,10 @@
 
 *Sidecar (aka external) subtitles* are standalone subtitle files in a format such as https://www.wikiwand.com/en/SubRip[SubRip^] (`+.srt+`) or https://www.wikiwand.com/en/DirectVobSub[VobSub^] (`+.idx/.sub+`) that are typically placed alongside, and usually share a base name with, the main video file, i.e.:
 
-[,shell,subs="verbatim,quotes"]
+[source,shell,subs="verbatim,quotes"]
 ----
-my_funny_video*.mkv*
-my_funny_video.eng*.srt*
+*my_funny_video.mkv*      🠔 Video file
+*my_funny_video.eng.srt*  🠔 Sub file
 ----
 
 === Remuxing with Soft Subtitles
