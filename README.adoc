@@ -18,24 +18,45 @@ endif::[]
 
 == Working with Subtitles
 
-=== A Note on Soft Subtitles vs. Sidecar Subtitles
+=== Soft Subtitles vs. Sidecar Subtitles
 
-*Soft (aka embedded) subtitles* are subtitles that are packaged as a track or stream inside a video container file.
+[%collapsible]
+====
+*Soft (aka embedded) subtitles* are subtitles that are packaged as a track or stream inside a container file.
 
-*Sidecar (aka external) subtitles* are standalone subtitle files in a format such as https://www.wikiwand.com/en/SubRip[SubRip^] (`+.srt+`) or https://www.wikiwand.com/en/DirectVobSub[VobSub^] (`+.idx/.sub+`) that are typically placed alongside, and usually share a base name with, the main video file, i.e.:
+*Sidecar (aka external) subtitles* are standalone subtitle files in a format such as https://www.wikiwand.com/en/SubRip[SubRip^] (`+.srt+`) or https://www.wikiwand.com/en/DirectVobSub[VobSub^] (`+.idx/.sub+`). They are typically placed in a folder alongside, and usually share a base name with, the main video file, e.g.:
+====
 
+.Example directory listing containing videos with sidecar subtitles
+[%collapsible]
+====
 [source,shell,subs="verbatim,quotes"]
 ----
-*some_video.mp4*        ☚ Video file
-*some_video.srt*        ☚ SubRip subtitle file
+*my_video.mp4*       ☚ Video container file
+*my_video.idx*       ☚ VobSub index file
+*my_video.sub*       ☚ VobSub subtitle file
 ...
 ...
 ...
-*my_video_2.mp4*        ☚ Video file
-*my_video_2.idx*        ☚ VobSub index file
-*my_video_2.sub*        ☚ VobSub subtitle file
-
+*other_video.mp4*    ☚ Video container file
+*other_video.srt*    ☚ SubRip subtitle file
 ----
+====
+
+=== Remuxing vs. Transcoding / Re-encoding
+
+[%collapsible]
+====
+Remuxing and transcoding are two different processes for changing video files.
+
+*Remuxing* lets you add or remove content streams to or from a container file. For example, you could embed a subtitle track from a sidecar file into an .mkv file without having to re-encode the video or audio.
+
+*Transcoding* is the process of re-encoding content streams, usually to change the format, bitrate or size.
+
+Most subtitle operations can be done via remuxing alone, without the need for transcoding.
+====
+
+
 
 === Remuxing with Soft Subtitles
 
@@ -188,9 +209,9 @@ ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflag
 
 == Other
 
-=== Encoding
+=== Transcoding
 
-==== Re-encode Blu-Ray file to x265 (1080p) (See https://www.reddit.com/r/ffmpeg/comments/mij9mr/which_settings_for_converting_fullhd_blu_rays_to/?rdt=47933[Reddit post])
+==== Transcode Blu-Ray video file to x265 format (See https://www.reddit.com/r/ffmpeg/comments/mij9mr/which_settings_for_converting_fullhd_blu_rays_to/?rdt=47933[Reddit post])
 
 [,shell]
 ----
@@ -208,9 +229,9 @@ First, find the mean audio volume:
 ffmpeg -i input.mkv -vn -af "volumedetect" -f null /dev/null
 ----
 
-The mean volume should appear near the end of the output, i.e. `+mean_volume: -24.8 dB+`.
+The mean volume should appear near the end of the output, e.g. `+mean_volume: -24.8 dB+`.
 
-Then you can re-encode using that value to normalize the audio:
+Then you can transcode using that value to normalize the audio:
 
 [,shell]
 ----
@@ -220,7 +241,7 @@ ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
 == Tips
 
 [TIP]
-If 'Starting new cluster due to timestamp' warning appears in the ffmpeg output during a muxing or encoding operation, try adding `+-max_interleave_delta 0+`.
+If 'Starting new cluster due to timestamp' warning appears in the ffmpeg output during a muxing or transcoding operation, try adding `+-max_interleave_delta 0+`.
 
 [TIP]
 If "missing timestamp" errors appear in the ffmpeg output, try adding `+-fflags +genpts+`.
