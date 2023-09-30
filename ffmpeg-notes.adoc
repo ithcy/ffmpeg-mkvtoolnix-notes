@@ -97,7 +97,8 @@ First, find the ID of the subtitle track with `+mkvmerge+`:
 mkvmerge -i input.mkv
 ----
 
-Then use that track ID with mkvextract. In this example the 
+Then use that track ID with `+mkvextract+`. In this example the track ID was 1.
+
 [,shell]
 ----
 mkvextract input.mkv tracks 1:output.sup
