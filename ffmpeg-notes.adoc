@@ -21,15 +21,14 @@
 
 [source,shell,subs="verbatim,quotes"]
 ----
-*my_funny_video.mp4*    ☚ Video file
-*my_funny_video.srt*    ☚ Sub file
+*some_video.mp4*        ☚ Video file
+*some_video.srt*        ☚ SubRip subtitle file
 ...
-*my_video.avi*          ☚ Video file
-*my_video.eng.srt*      ☚ Sub file
+...
 ...
 *my_video_2.mp4*        ☚ Video file
-*my_video_2.idx*        ☚ Sub file
-*my_video_2.sub*        ☚ Sub file
+*my_video_2.idx*        ☚ VobSub index file
+*my_video_2.sub*        ☚ VobSub subtitle file
 
 ----
 
