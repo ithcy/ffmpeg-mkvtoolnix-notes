@@ -187,7 +187,7 @@ mkvpropedit input.mkv --tags all:
 mkvpropedit input.mkv -d title
 ----
 
-NOTE: This deletes the title tag from the segment info / format section.
+NOTE: The above deletes the title tag from the segment info / format section.
 
 ==== Delete Name from First Video Track in an MKV file
 
@@ -196,9 +196,16 @@ NOTE: This deletes the title tag from the segment info / format section.
 mkvpropedit input.mkv -e track:v1 -d name
 ----
 
+==== Delete Both Main Title and Name of First Video Track
+
+[,shell]
+----
+mkvpropedit input.mkv -d title -e track:v1 -d name
+----
+
 === Working with MP4 Metadata
 
-NOTE: These operations require remuxing.
+NOTE: These operations require remuxing, due to limitations of the MP4 container format.
 
 ==== Strip All Metadata Tags from an MP4 File (See https://superuser.com/questions/441361/strip-metadata-from-all-formats-with-ffmpeg/428039#428039[Superuser post])
 
