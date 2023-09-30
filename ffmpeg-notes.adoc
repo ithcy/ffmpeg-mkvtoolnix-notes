@@ -1,6 +1,6 @@
 # FFmpeg / MKVToolNix Notes
 :doctype: article
-:toc: auto
+:toc: right
 :toclevels: 4
 :source-highlighter: highlight.js
 :highlightjs-theme: darcula
