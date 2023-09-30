@@ -8,6 +8,7 @@
 :source-language: shell
 :stylesheet: boot-slate.css
 :hide-uri-scheme:
+:icons: font
 
 == Working with Subtitles
 
