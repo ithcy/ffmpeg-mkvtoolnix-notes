@@ -17,7 +17,7 @@
 ====
 *Soft (aka embedded) subtitles* are subtitles that are packaged as a track or stream inside a video container file.
 
-*Sidecar (aka external) subtitles* are standalone subtitle files in a format such as SubRip (`+.srt+`) or VobSub (`+.idx+`/`+.sub+`) that are typically placed alongside the main video file and share a base filename with the video. (i.e. `+video.mkv+` and `+video.eng.srt+`)
+*Sidecar (aka external) subtitles* are standalone subtitle files in a format such as https://www.wikiwand.com/en/SubRip[SubRip] (`+.srt+`) or https://www.wikiwand.com/en/DirectVobSub[VobSub] (`+.idx+`/`+.sub+`) that are typically placed alongside the main video file and share a base filename with the video. (i.e. `+video.mkv+` and `+video.eng.srt+`)
 ====
 
 === Remuxing with Soft Subtitles
@@ -51,7 +51,7 @@ ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1
 
 ==== Remux MP4 and 1 Sidecar SRT into MP4
 
-NOTE: The subtitle is converted to `+mov_text+` format (aka Timed Text/TTXT, http://en.wikipedia.org/wiki/MPEG-4_Part_17[MPEG-4 Part 17]) since MP4 containers do not support SRT subtitles.
+NOTE: The subtitle is converted to `+mov_text+` format (aka Timed Text/TTXT, https://www.wikiwand.com/en/MPEG-4_Part_17[MPEG-4 Part 17]) since MP4 containers do not support SRT subtitles.
 
 [,shell]
 ----
