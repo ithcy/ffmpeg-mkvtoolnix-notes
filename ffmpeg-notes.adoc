@@ -15,22 +15,21 @@
 .Soft Subtitles vs. Sidecar Subtitles
 [%collapsible]
 ====
-*Soft subtitles* are subtitles that are packaged as a track or stream inside a video container file, as opposed to <<remuxing-with-sidecar-subtitles,sidecar>> or hardcoded subtitles.
+*Soft subtitles* (aka embedded subtitles) are subtitles that are packaged as a track or stream inside a video container file.
 
-*Sidecar subtitles* (aka external subtitles) are separate subtitle files that usually sit alongside the main video file with the same base filename. (i.e. `video.mkv` and `video.eng.srt`)
+*Sidecar subtitles* (aka external subtitles) are separate subtitle files that are typically placed alongside the main video file and share a base filename with the video. (i.e. `+video.mkv+` and `+video.eng.srt+`)
 ====
-
 
 === Remuxing with Soft Subtitles
 
-==== Remux MP4 with No Soft Subtitles to MKV
+==== Remux MP4 Without Subtitles to MKV
 
 [,shell]
 ----
 ffmpeg -i input.mp4 -c copy -map 0 -map_metadata -1 output.mkv
 ----
 
-==== Remux MP4 with 1 Soft Subtitle Track to MKV
+==== Remux MP4 With 1 Soft Subtitle Track to MKV
 
 [,shell]
 ----
