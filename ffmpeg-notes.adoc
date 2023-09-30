@@ -1,6 +1,6 @@
 # FFmpeg / MKVToolNix Notes
 :doctype: article
-:toc: left
+:toc: right
 :toclevels: 4
 :doctype: book
 :source-highlighter: highlight.js
