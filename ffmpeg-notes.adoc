@@ -3,7 +3,6 @@
 :doctype: article
 :toc:
 :toclevels: 4
-:doctype: book
 :source-highlighter: highlight.js
 :highlightjs-theme: darcula
 :rouge-theme: monokai
