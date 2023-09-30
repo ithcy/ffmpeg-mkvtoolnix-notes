@@ -22,7 +22,12 @@
 [source,shell,subs="verbatim,quotes"]
 ----
 *my_funny_video.mkv*      ☚ Video file
-*my_funny_video.eng.srt*  ☚ Sub file
+*my_funny_video.srt*  ☚ Sub file
+...
+*my_video_2.mkv*      ☚ Video file
+*my_video_2.idx*      ☚ Sub file
+*my_video_2.sub*      ☚ Sub file
+
 ----
 
 === Remuxing with Soft Subtitles
