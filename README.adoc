@@ -25,11 +25,9 @@ endif::[]
 *Soft (aka embedded) subtitles* are subtitles that are packaged as a track or stream inside a container file.
 
 *Sidecar (aka external) subtitles* are standalone subtitle files in a format such as https://www.wikiwand.com/en/SubRip[SubRip^] (`+.srt+`) or https://www.wikiwand.com/en/DirectVobSub[VobSub^] (`+.idx/.sub+`). They are typically placed in a folder alongside, and usually share a base name with, the main video file, e.g.:
-====
 
-.Example directory listing containing videos with sidecar subtitles
-[%collapsible]
-====
+*Example directory listing containing videos with sidecar subtitles*
+
 [source,shell,subs="verbatim,quotes"]
 ----
 *my_video.mp4*       ☚ Video container file
@@ -100,8 +98,18 @@ ffmpeg -i input.mp4 -i sub.srt -c:v copy -c:a copy -c:s mov_text -map_metadata -
 
 [,shell]
 ----
-mkvmerge -o output.mkv input.mkv sub.idx #[ ...sub2.idx ... ]
+mkvmerge -o output.mkv input.mkv sub.idx
 ----
+
+The VobSub `.sub` file should not be specified, only the index file.
+
+Multiple subtitles can be added in one command:
+
+[,shell]
+----
+mkvmerge -o output.mkv input.mkv sub1.idx sub2.idx sub3.srt
+----
+
 
 ==== Remux MP4 and Multiple Sidecar SRTs into MKV
 
@@ -229,7 +237,7 @@ ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -pr
 
 ==== Normalize Audio Volume
 
-Fix audio volume that is too high or to low in a video by normalizing (correcting) the audio level.
+Fix audio volume that is too high or too low in a video by normalizing (correcting) the audio level.
 
 First step is to find the mean audio volume of the source video using `ffmpeg` volume detection:
 
