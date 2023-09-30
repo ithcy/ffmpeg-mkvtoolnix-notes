@@ -210,9 +210,9 @@ Then you can re-encode using that value to normalize the audio:
 ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
 ----
 
-== Notes
+== Tips
 
-If 'Starting new cluster due to timestamp' warning appears in the ffmpeg output during a muxing or encoding operation, try adding `+-max_interleave_delta 0+`.
+TIP: If 'Starting new cluster due to timestamp' warning appears in the ffmpeg output during a muxing or encoding operation, try adding `+-max_interleave_delta 0+`.
 
 If "missing timestamp" errors appear in the ffmpeg output, try adding `+-fflags +genpts+`.
 
