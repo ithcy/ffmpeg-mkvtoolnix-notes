@@ -1,1 +1,204 @@
-‎‎​
+# FFmpeg / MKVToolNix Notes
+
+:doctype: article
+:toc: right
+:toclevels: 4
+:doctype: book
+:source-highlighter: highlightjs
+:highlightjs-theme: darcula
+:rouge-theme: monokai
+:source-language: shell
+:stylesheet: boot-slate.css
+
+== Working with Subtitles
+
+.Soft Subtitles vs. Sidecar Subtitles
+[%collapsible]
+====
+*Soft subtitles* are subtitles that are packaged as a track or stream inside a video container file, as opposed to <<remuxing-with-sidecar-subtitles,sidecar>> or hardcoded subtitles.
+
+*Sidecar subtitles* (aka external subtitles) are separate subtitle files that usually sit alongside the main video file with the same base filename. (i.e. `video.mkv` and `video.eng.srt`)
+====
+
+
+=== Remuxing with Soft Subtitles
+
+==== Remux MP4 with No Soft Subtitles to MKV
+
+[,shell]
+----
+ffmpeg -i input.mp4 -c copy -map 0 -map_metadata -1 output.mkv
+----
+
+==== Remux MP4 with 1 Soft Subtitle Track to MKV
+
+[,shell]
+----
+`ffmpeg -i input.mp4 -c:v copy -c:a copy -c:s srt -map_metadata -1 -map 0 -metadata:s:s:0 language=eng output.mkv`
+----
+
+NOTE: To give a title to the subtitle track, add e.g. `+-metadata:s:s:0 title='English Commentary'+`
+
+==== MISSING: Remux MP4 with Multiple Soft Subtitle Tracks to MKV
+
+=== Remuxing with Sidecar Subtitles
+
+==== Remux MP4 and 1 Sidecar SRT into MKV
+
+[,shell]
+----
+ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1:s -metadata:s:s:0 language=eng output.mkv
+----
+
+==== Remux MP4 and 1 Sidecar SRT into MP4
+
+NOTE: The subtitle is converted to mov_text format (aka Timed Text/TTXT, http://en.wikipedia.org/wiki/MPEG-4_Part_17[MPEG-4 Part 17]) since MP4 does not support SRT subtitles.
+
+[,shell]
+----
+ffmpeg -i input.mp4 -i sub.srt -c:v copy -c:a copy -c:s mov_text -map_metadata -1 -metadata:s:s:0 language=eng output.mp4
+----
+
+==== Remux MKV and Sidecar VobSub (.idx/.sub) into MKV
+
+[,shell]
+----
+mkvmerge -o output.mkv input.mkv sub.idx #[ ...sub2.idx ... ]
+----
+
+==== Remux MP4 and Multiple Sidecar SRTs into MKV
+
+[,shell]
+----
+ffmpeg -i input.mp4 -i sub1.srt -i sub2.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1:s -map 2:s -metadata:s:s:0 language=eng -metadata:s:s:1 language=eng -metadata:s:s:1 title='SDH' output.mkv
+----
+
+==== Remux MP4 and Multiple Sidecar SRTs into MP4
+
+[,shell]
+----
+ffmpeg -i input.mp4 -i sub1.srt -i sub2.srt -c:v copy -c:a copy -c:s mov_text -map_metadata -1 -map 0:v -map 0:a -map 1:s -map 2:s -metadata:s:s:0 language=eng -metadata:s:s:1 language=eng -metadata:s:s:1 title='SDH' output.mp4
+----
+
+=== Extracting and Converting Subtitles
+
+==== Extract Blu-Ray (PGS/HDMV) Subtitles from MKV
+
+[,shell]
+----
+ffmpeg -i input.mkv -map 0:s:0 -f sup output.sup
+----
+
+==== Alternate method of extracting Blu-Ray subtitles using mkvmerge
+
+First, find the ID of the subtitle track ID with mkvmerge, then use that track ID with mkvextract.
+
+[,shell]
+----
+mkvmerge -i input.mkv
+mkvextract input.mkv tracks 1:output.sup
+----
+
+==== Extract Soft Subtitle from MP4 and Convert to SRT
+
+[,shell]
+----
+ffmpeg -i input.mp4 -map 0:s:0 output.srt
+----
+
+==== Convert Subtitle file from SRT to SSA
+
+[,shell]
+----
+ffmpeg -i input.srt output.ass
+----
+
+=== Other Subtitle Operations
+
+==== Setting Subtitles to Automatically Display
+
+[,shell]
+----
+mkvpropedit -q input.mkv -e track:s1 -s flag-default=1
+----
+
+NOTE: Video players will automatically display the first subtitle track that has the "default" flag set. To set a different subtitle track as default, change `+track:s1+` to `+track:s2+` or so. The track numbers can be found via `+mkvmerge -i input.mkv+`.
+
+== Working with Metadata
+
+=== Working with Matroska Metadata
+
+NOTE: No remuxing is needed for these operations; they happen in place on the input file.
+
+==== Strip All Metadata Tags from an MKV file
+
+[,shell]
+----
+mkvpropedit input.mkv --tags all:
+----
+
+==== Delete Main Title from an MKV file
+
+[,shell]
+----
+mkvpropedit input.mkv -d title
+----
+
+NOTE: This deletes the title tag from the segment info / format section.
+
+==== Delete Name from First Video Track in an MKV file
+
+[,shell]
+----
+mkvpropedit input.mkv -e track:v1 -d name
+----
+
+=== Working with MP4 Metadata
+
+NOTE: These operations require remuxing.
+
+==== Strip All Metadata Tags from an MP4 File (See https://superuser.com/questions/441361/strip-metadata-from-all-formats-with-ffmpeg/428039#428039[Superuser post])
+
+[,shell]
+----
+ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -flags:s +bitexact output.mp4
+----
+
+== Other
+
+=== Encoding
+
+==== Re-encode Blu-Ray file to x265 (1080p) (See https://www.reddit.com/r/ffmpeg/comments/mij9mr/which_settings_for_converting_fullhd_blu_rays_to/?rdt=47933[Reddit post])
+
+[,shell]
+----
+ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -preset slow -crf 22 -aq-mode 4 -pix_fmt yuv420p10le -c:v libx265 -tag:v hvc1 -x265-params hdr-opt=1:keyint=96 -profile:v main10 -c:a copy -c:s copy output.mkv
+----
+
+=== Audio Processing
+
+==== Normalize Audio Volume
+
+First, find the mean audio volume:
+
+[,shell]
+----
+ffmpeg -i input.mkv -vn -af "volumedetect" -f null /dev/null
+----
+
+The mean volume should appear near the end of the output, i.e. `+mean_volume: -24.8 dB+`.
+
+Then you can re-encode using that value to normalize the audio:
+
+[,shell]
+----
+ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
+----
+
+== Notes
+
+If 'Starting new cluster due to timestamp' warning appears in the ffmpeg output during a muxing or encoding operation, try adding `+-max_interleave_delta 0+`.
+
+If "missing timestamp" errors appear in the ffmpeg output, try adding `+-fflags +genpts+`.
+
+To time an ffmpeg operation, use the `+-benchmark+` option.
