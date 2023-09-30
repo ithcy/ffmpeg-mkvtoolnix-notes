@@ -13,13 +13,11 @@
 
 == Working with Subtitles
 
-.A Note on Soft Subtitles vs. Sidecar Subtitles
-[%collapsible]
-====
+=== A Note on Soft Subtitles vs. Sidecar Subtitles
+
 *Soft (aka embedded) subtitles* are subtitles that are packaged as a track or stream inside a video container file.
 
 *Sidecar (aka external) subtitles* are standalone subtitle files in a format such as https://www.wikiwand.com/en/SubRip[SubRip^] (`+.srt+`) or https://www.wikiwand.com/en/DirectVobSub[VobSub^] (`+.idx+`/`+.sub+`) that are typically placed alongside the main video file and share a base filename with the video. (i.e. `+video.mkv+` and `+video.eng.srt+`)
-====
 
 === Remuxing with Soft Subtitles
 
