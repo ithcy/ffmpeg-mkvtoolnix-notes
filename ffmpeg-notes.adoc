@@ -3,12 +3,6 @@
 :doctype: article
 :toc:
 :toclevels: 4
-:source-highlighter: highlight.js
-:highlightjs-theme: darcula
-:rouge-theme: monokai
-:source-language: shell
-:stylesheet: boot-slate.css
-:hide-uri-scheme:
 
 == Working with Subtitles
 
