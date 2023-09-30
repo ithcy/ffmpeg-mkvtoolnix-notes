@@ -90,11 +90,16 @@ ffmpeg -i input.mkv -map 0:s:0 -f sup output.sup
 
 ==== Alternate method of extracting Blu-Ray subtitles using mkvmerge
 
-First, find the ID of the subtitle track ID with mkvmerge, then use that track ID with mkvextract.
+First, find the ID of the subtitle track with `+mkvmerge+`:
 
 [,shell]
 ----
 mkvmerge -i input.mkv
+----
+
+Then use that track ID with mkvextract. In this example the 
+[,shell]
+----
 mkvextract input.mkv tracks 1:output.sup
 ----
 
