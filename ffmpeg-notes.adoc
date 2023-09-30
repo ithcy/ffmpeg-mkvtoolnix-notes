@@ -216,6 +216,8 @@ ffmpeg -i input.mkv -vcodec copy -af "volume=24dB" output.mkv
 [TIP]
 If 'Starting new cluster due to timestamp' warning appears in the ffmpeg output during a muxing or encoding operation, try adding `+-max_interleave_delta 0+`.
 
+[TIP]
 If "missing timestamp" errors appear in the ffmpeg output, try adding `+-fflags +genpts+`.
 
+[TIP]
 To time an ffmpeg operation, use the `+-benchmark+` option.
