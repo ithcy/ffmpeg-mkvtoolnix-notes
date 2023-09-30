@@ -32,7 +32,7 @@ endif::[]
 ====
 [source,shell,subs="verbatim,quotes"]
 ----
-my_video**.mp4**       ☚ Video container file
+*my_video.mp4*       ☚ Video container file
 *my_video.idx*       ☚ VobSub index file
 *my_video.sub*       ☚ VobSub subtitle file
 ...
