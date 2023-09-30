@@ -15,9 +15,9 @@
 .A Note on Soft Subtitles vs. Sidecar Subtitles
 [%collapsible]
 ====
-*Soft subtitles* (aka embedded subtitles) are subtitles that are packaged as a track or stream inside a video container file.
+*Soft (aka embedded) subtitles* are subtitles that are packaged as a track or stream inside a video container file.
 
-*Sidecar subtitles* (aka external subtitles) are separate subtitle files that are typically placed alongside the main video file and share a base filename with the video. (i.e. `+video.mkv+` and `+video.eng.srt+`)
+*Sidecar (aka external) subtitles* are standalone subtitle files that are typically placed alongside the main video file and share a base filename with the video. (i.e. `+video.mkv+` and `+video.eng.srt+`)
 ====
 
 === Remuxing with Soft Subtitles
