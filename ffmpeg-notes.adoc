@@ -51,7 +51,7 @@ ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1
 
 ==== Remux MP4 and 1 Sidecar SRT into MP4
 
-NOTE: The subtitle is converted to mov_text format (aka Timed Text/TTXT, http://en.wikipedia.org/wiki/MPEG-4_Part_17[MPEG-4 Part 17]) since MP4 does not support SRT subtitles.
+NOTE: The subtitle is converted to `+mov_text+` format (aka Timed Text/TTXT, http://en.wikipedia.org/wiki/MPEG-4_Part_17[MPEG-4 Part 17]) since MP4 does not support SRT subtitles.
 
 [,shell]
 ----
