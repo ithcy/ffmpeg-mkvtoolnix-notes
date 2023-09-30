@@ -4,7 +4,7 @@
 :toc: left
 :toclevels: 4
 :doctype: book
-:source-highlighter: highlightjs
+:source-highlighter: highlight.js
 :highlightjs-theme: darcula
 :rouge-theme: monokai
 :source-language: shell
