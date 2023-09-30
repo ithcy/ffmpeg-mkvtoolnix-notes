@@ -11,7 +11,7 @@ ifdef::env-github[]
 :status:
 :caution-caption: :fire:
 :important-caption: :exclamation:
-// :note-caption: :paperclip:
+:note-caption: :information_source:
 :tip-caption: :bulb:
 :warning-caption: :warning:
 endif::[]
@@ -74,7 +74,7 @@ ffmpeg -i input.mp4 -c copy -map 0 -map_metadata -1 output.mkv
 ffmpeg -i input.mp4 -c:v copy -c:a copy -c:s srt -map_metadata -1 -map 0 -metadata:s:s:0 language=eng output.mkv
 ----
 
-NOTE: To give a title to the subtitle track, add e.g. `+-metadata:s:s:0 title='English Commentary'+`
+TIP: To give a title to the subtitle track, add e.g. `+-metadata:s:s:0 title='English Commentary'+`
 
 ==== MISSING: Remux MP4 with Multiple Soft Subtitle Tracks to MKV
 
