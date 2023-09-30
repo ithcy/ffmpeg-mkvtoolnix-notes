@@ -12,7 +12,7 @@
 
 == Working with Subtitles
 
-.Soft Subtitles vs. Sidecar Subtitles
+.A Note on Soft Subtitles vs. Sidecar Subtitles
 [%collapsible]
 ====
 *Soft subtitles* (aka embedded subtitles) are subtitles that are packaged as a track or stream inside a video container file.
