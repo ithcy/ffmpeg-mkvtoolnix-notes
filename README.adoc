@@ -166,7 +166,7 @@ ffmpeg -i input.srt output.ass
 
 === Other Subtitle Operations
 
-==== Setting Subtitles to Automatically Display
+==== Setting Subtitles to Automatically Display (MKV)
 
 [,shell]
 ----
@@ -175,7 +175,7 @@ mkvpropedit -q input.mkv -e track:s1 -s flag-default=1
 
 NOTE: Video players will automatically display the first subtitle track that has the "default" flag set. To set a different subtitle track as default, change `+track:s1+` to `+track:s2+` or so. The track numbers can be found via `+mkvmerge -i input.mkv+`.
 
-==== Set the Language of a Subtitle Track
+==== Set the Language of Subtitle Track (MKV)
 
 [,shell]
 ----
