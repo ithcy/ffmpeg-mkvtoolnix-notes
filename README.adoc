@@ -242,28 +242,6 @@ ffmpeg -i input.mp4 -map 0 -map_metadata -1 -c:v copy -c:a copy -c:s copy -fflag
 ffmpeg -i input.mkv -analyzeduration 2147483647 -probesize 2147483647 -map 0 -preset slow -crf 22 -aq-mode 4 -pix_fmt yuv420p10le -c:v libx265 -tag:v hvc1 -x265-params hdr-opt=1:keyint=96 -profile:v main10 -c:a copy -c:s copy output.mkv
 ----
 
-=== Audio Processing
-
-==== Normalize Audio Volume
-
-Fix audio volume that is too high or too low in a video by normalizing (correcting) the audio level.
-
-First step is to find the mean audio volume of the source video using `ffmpeg` volume detection:
-
-[,shell]
-----
-ffmpeg -i input.mkv -vn -af "volumedetect" -f null /dev/null
-----
-
-`ffmpeg` will take some time to process the input file and then print some statistics. The mean volume should appear near the end of the output, e.g. `+mean_volume: -24 dB+`.
-
-Then you can create a video with corrected audio by transcoding to a new file using that value:
-
-[source,shell,subs="verbatim,quotes"]
-----
-ffmpeg -i input.mkv -map 1 -c:v copy -c:s copy *[red]#-af "volume=24dB"#* output.mkv
-----
-
 == Tips
 
 [TIP]
