@@ -84,6 +84,10 @@ TIP: To give a title to the subtitle track, add e.g. `+-metadata:s:s:0 title='En
 ----
 ffmpeg -i input.mp4 -i sub.srt -c copy -map_metadata -1 -map 0:v -map 0:a -map 1:s -metadata:s:s:0 language=eng output.mkv
 ----
+or
+----
+mkvmerge -o output.mkv input.mp4 sub.srt --default-language eng --default-track-flag 0 --track-enabled-flag 0
+----
 
 ==== Remux MP4 and 1 Sidecar SRT into MP4
 
